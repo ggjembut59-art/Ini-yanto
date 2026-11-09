@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Web UI</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #d1d7db;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* App Container */
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 95vh;
+            background-color: #fff;
+            display: flex;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Sidebar (Left Panel) */
+        .sidebar {
+            width: 35%;
+            border-right: 1px solid #e9edef;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+        }
+
+        .header {
+            height: 60px;
+            background-color: #f0f2f5;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e9edef;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #00a884;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .search-box {
+            padding: 8px 12px;
+            background-color: #fff;
+            border-bottom: 1px solid #e9edef;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 14px;
+            background-color: #f0f2f5;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .chat-item:hover, .chat-item.active {
+            background-color: #f0f2f5;
+        }
+
+        .chat-info {
+            margin-left: 14px;
+            flex: 1;
+        }
+
+        .chat-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #111b21;
+        }
+
+        .chat-lastmsg {
+            font-size: 13px;
+            color: #667781;
+            margin-top: 2px;
+        }
+
+        /* Main Chat Area (Right Panel) */
+        .chat-area {
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            background-color: #efeae2;
+            background-image: radial-gradient(#d1d7db 1px, transparent 0);
+            background-size: 16px 16px;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 20px 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .msg {
+            max-width: 60%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .msg-received {
+            background-color: #ffffff;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+            color: #111b21;
+        }
+
+        .msg-sent {
+            background-color: #d9fdd3;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            color: #111b21;
+        }
+
+        .msg-time {
+            font-size: 10px;
+            color: #667781;
+            float: right;
+            margin-left: 10px;
+            margin-top: 4px;
+        }
+
+        /* Input Footer */
+        .footer {
+            height: 62px;
+            background-color: #f0f2f5;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-msg {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #ffffff;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .send-btn {
+            background-color: #00a884;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .send-btn:hover {
+            background-color: #008f6f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Kiri -->
+        <div class="sidebar">
+            <div class="header">
+                <div class="avatar">Me</div>
+                <span style="font-weight: bold; color: #54656f;">WhatsApp</span>
+            </div>
+
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Cari atau mulai chat baru">
+            </div>
+
+            <div class="chat-list">
+                <div class="chat-item active">
+                    <div class="avatar" style="background-color: #0080ff;">A</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Andi</div>
+                        <div class="chat-lastmsg">Oke siap, nanti dikirim kodenya.</div>
+                    </div>
+                </div>
+                <div class="chat-item">
+                    <div class="avatar" style="background-color: #ff5500;">B</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Budi</div>
+                        <div class="chat-lastmsg">Halo, apa kabar?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Area Chat Kanan -->
+        <div class="chat-area">
+            <div class="header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="avatar" style="background-color: #0080ff;">A</div>
+                    <div>
+                        <div class="chat-name">Andi</div>
+                        <div style="font-size: 12px; color: #667781;">Online</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Isi Pesan -->
+            <div class="messages-container" id="messageBox">
+                <div class="msg msg-received">
+                    Halo bro, bisa tolong buatkan tampilan HTML WhatsApp?
+                    <span class="msg-time">10:00</span>
+                </div>
+                <div class="msg msg-sent">
+                    Bisa, ini tampilan contoh UI dasarnya.
+                    <span class="msg-time">10:02</span>
+                </div>
+                <div class="msg msg-received">
+                    Oke siap, nanti dikirim kodenya.
+                    <span class="msg-time">10:03</span>
+                </div>
+            </div>
+
+            <!-- Input Pesan -->
+            <div class="footer">
+                <input type="text" id="inputText" class="input-msg" placeholder="Ketik pesan..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">Kirim</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let input = document.getElementById('inputText');
+            let text = input.value.trim();
+            if (text === "") return;
+
+            let messageBox = document.getElementById('messageBox');
+            let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            let msgDiv = document.createElement('div');
+            msgDiv.className = 'msg msg-sent';
+            msgDiv.innerHTML = text + '<span class="msg-time">' + time + '</span>';
+
+            messageBox.appendChild(msgDiv);
+            input.value = "";
+            messageBox.scrollTop = messageBox.scrollHeight;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
